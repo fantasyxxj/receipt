@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Privacy Policy — ReceiptMaster</title>
+<style>
+  :root {
+    color-scheme: light dark;
+    --fg: #1a1a1a;
+    --bg: #ffffff;
+    --muted: #6b6b6b;
+    --link: #2557d6;
+    --border: #e5e5e5;
+    --rule: #ececec;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --fg: #f1f1f1;
+      --bg: #111213;
+      --muted: #9b9b9b;
+      --link: #6ea1ff;
+      --border: #2a2c2f;
+      --rule: #1f2123;
+    }
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font: 16px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", "Hiragino Sans", "Noto Sans CJK JP", sans-serif;
+    color: var(--fg);
+    background: var(--bg);
+    padding: 36px 20px 80px;
+  }
+  main { max-width: 720px; margin: 0 auto; }
+  nav.langbar {
+    position: sticky;
+    top: 0;
+    background: var(--bg);
+    padding: 12px 0;
+    margin: -12px 0 16px;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 18px;
+  }
+  nav.langbar a { color: var(--link); text-decoration: none; }
+  nav.langbar a:hover { text-decoration: underline; }
+  section.lang {
+    border-top: 1px dashed var(--rule);
+    padding-top: 24px;
+    margin-top: 32px;
+  }
+  section.lang:first-of-type { border-top: none; padding-top: 0; margin-top: 0; }
+  h1 { font-size: 28px; margin: 0 0 6px; line-height: 1.25; }
+  h2 { font-size: 18px; margin: 28px 0 6px; line-height: 1.3; }
+  .meta { color: var(--muted); font-size: 13px; margin-bottom: 8px; }
+  p { margin: 0 0 12px; }
+  a { color: var(--link); }
+  .home {
+    display: inline-block;
+    margin-bottom: 16px;
+    color: var(--muted);
+    font-size: 13px;
+  }
+</style>
+</head>
+<body>
+<main>
+  <a class="home" href="index.html">← ReceiptMaster Legal</a>
+  <nav class="langbar">
+    <a href="#en">English</a>
+    <a href="#ja">日本語</a>
+    <a href="#zh-Hans">简体中文</a>
+    <a href="#zh-Hant">繁體中文</a>
+  </nav>
+
+  <section class="lang" id="en" lang="en">
+    <h1>Privacy Policy</h1>
+    <div class="meta">Last updated: April 2026</div>
+
+    <h2>Summary</h2>
+    <p>ReceiptMaster takes your privacy seriously. This policy explains what data the app handles and how. Short version: everything stays on your device.</p>
+
+    <h2>Local Storage Only</h2>
+    <p>All your receipt data — images, text, amounts, dates — is stored locally in your device's secure SwiftData storage. We do not run any servers. We do not collect, transmit, or sell any of your information.</p>
+
+    <h2>Camera &amp; Photo Permissions</h2>
+    <p>ReceiptMaster requests access to your camera and photo library only when you initiate a receipt scan. Camera frames are processed on-device by Apple's Vision framework; the resulting OCR text and chosen receipt image are saved with your record. Photos you do not select stay private.</p>
+
+    <h2>On-Device AI</h2>
+    <p>When Apple Intelligence is available on your device, the app calls it locally to improve receipt extraction. No data leaves your device, and no API key or network access is required for on-device AI to work.</p>
+
+    <h2>Cloud AI (Optional)</h2>
+    <p>If — and only if — you actively configure a cloud provider in Settings → AI Models, your OCR text and aggregated financial summaries will be sent over HTTPS to the provider you chose (e.g. OpenAI, Anthropic, Doubao, Qwen, DeepSeek) so the model can perform extraction or forecasting. The API key you supply is stored only in iOS Keychain on this device. We do not relay anything through our servers — the request goes directly from your device to the provider's API. Read the chosen provider's privacy policy before enabling.</p>
+    <p>You can disable cloud AI at any time in Settings; doing so does not delete past usage already retained by the provider — that is governed entirely by their retention policy, not ours.</p>
+
+    <h2>Notifications</h2>
+    <p>When you opt-in to refund-deadline reminders, ReceiptMaster schedules local notifications using iOS's notification system. These are stored and delivered by the operating system on your device. They never leave your device.</p>
+
+    <h2>iCloud Sync</h2>
+    <p>If you enable iCloud sync, your receipt data is synchronized across your own devices through Apple CloudKit's private database. The data lives in your personal iCloud account and counts against your iCloud storage quota — not ours. We have no access to it. You can disable sync any time from iOS Settings → [Apple ID] → iCloud → Apps Using iCloud.</p>
+
+    <h2>In-App Purchases</h2>
+    <p>If you purchase the Pro upgrade, the transaction is handled by Apple's StoreKit. ReceiptMaster only receives confirmation that the purchase succeeded; we do not see your payment details.</p>
+
+    <h2>Network Access</h2>
+    <p>The app does not connect to the network in normal use. A future feature will let you manually refresh exchange rates by contacting public services such as frankfurter.app or open.er-api.com. These requests will only carry the base currency code (e.g. USD) and never any of your account or transaction data.</p>
+
+    <h2>Children's Privacy</h2>
+    <p>ReceiptMaster is not directed at children under 13 and does not knowingly collect data from them. Because we collect no data, the app is safe for use by anyone.</p>
+
+    <h2>Changes to This Policy</h2>
+    <p>If we update this policy in a future release, the new version will be visible in this same screen. We will not retroactively change how data already on your device is handled.</p>
+
+    <h2>Contact</h2>
+    <p>Questions? Email: <a href="mailto:fantasyxxj@gmail.com">fantasyxxj@gmail.com</a></p>
+  </section>
+
+  <section class="lang" id="ja" lang="ja">
+    <h1>プライバシーポリシー</h1>
+    <div class="meta">最終更新：2026 年 4 月</div>
+
+    <h2>概要</h2>
+    <p>ReceiptMaster はあなたのプライバシーを大切にします。このポリシーでは、アプリが扱うデータとその扱い方を説明します。要するに、すべてのデータは端末内に留まります。</p>
+
+    <h2>データは端末内のみに保存</h2>
+    <p>領収書データ（画像、テキスト、金額、日付）はすべて、お使いの端末の SwiftData セキュアストレージにローカル保存されます。サーバーは運用しておらず、お客様の情報を収集・送信・販売することはありません。</p>
+
+    <h2>カメラと写真へのアクセス</h2>
+    <p>ReceiptMaster はスキャン操作の開始時にのみカメラと写真ライブラリへのアクセスを求めます。カメラ画像は Apple Vision フレームワークによって端末内で処理され、OCR で抽出されたテキストと選択した領収書画像のみが記録に保存されます。選択していない写真にはアクセスしません。</p>
+
+    <h2>オンデバイス AI</h2>
+    <p>Apple Intelligence が利用可能な端末では、レシート読み取りの精度向上のためローカルで呼び出します。データは端末を離れず、デバイス内 AI の利用に API キーやネットワーク接続は不要です。</p>
+
+    <h2>クラウド AI（オプション）</h2>
+    <p>設定 → AI モデル でクラウドプロバイダを能動的に設定した場合に限り、OCR テキストや集約された財務サマリーは選択したプロバイダ（OpenAI、Anthropic、Doubao、Qwen、DeepSeek など）に HTTPS 経由で送信され、抽出や予測が実行されます。入力した API キーは本端末の iOS Keychain にのみ保存されます。当方のサーバーは介在せず、リクエストは端末からプロバイダ API に直接送られます。有効化前に各プロバイダのプライバシーポリシーをご確認ください。</p>
+    <p>設定からいつでもクラウド AI を無効化できますが、プロバイダ側に既に保持された過去の利用履歴は削除されません — それは各プロバイダの保持ポリシーに完全に従います。</p>
+
+    <h2>通知</h2>
+    <p>返品期限のリマインダーを有効にすると、ReceiptMaster は iOS の通知システムを使ってローカル通知をスケジュールします。これらは端末上の OS によって保存・配信され、端末から外部に送信されることはありません。</p>
+
+    <h2>iCloud 同期</h2>
+    <p>iCloud 同期を有効にした場合、領収書データは Apple CloudKit のプライベートデータベースを通じて、ご自身の各デバイス間で同期されます。データはお客様個人の iCloud アカウントに保存され、当方ではなくお客様の iCloud ストレージ容量を消費します。当方からアクセスすることはできません。同期は iOS の 設定 → [Apple ID] → iCloud → このiPhoneを使用しているApp からいつでも無効化できます。</p>
+
+    <h2>App 内課金</h2>
+    <p>Pro 版を購入される場合、決済は Apple の StoreKit によって処理されます。ReceiptMaster は購入成功の通知のみを受け取り、お支払い情報の詳細にアクセスすることはありません。</p>
+
+    <h2>ネットワークアクセス</h2>
+    <p>通常の使用ではネットワークに接続しません。将来のバージョンでは、frankfurter.app や open.er-api.com などの公開サービスに接続して為替レートを手動で更新できる機能を追加予定です。リクエストには基準通貨コード（USD など）のみが含まれ、アカウント情報や取引データは一切含まれません。</p>
+
+    <h2>お子様のプライバシー</h2>
+    <p>ReceiptMaster は 13 歳未満のお子様を対象としておらず、お子様のデータを意図的に収集することはありません。本アプリは一切データを収集しないため、どなたでも安心してご利用いただけます。</p>
+
+    <h2>本ポリシーの変更</h2>
+    <p>本ポリシーは将来のバージョンで更新される場合があり、最新版はこの画面で確認できます。お使いの端末上にすでに保存されているデータの取扱いを遡って変更することはありません。</p>
+
+    <h2>お問い合わせ</h2>
+    <p>ご質問は <a href="mailto:fantasyxxj@gmail.com">fantasyxxj@gmail.com</a> までお寄せください。</p>
+  </section>
+
+  <section class="lang" id="zh-Hans" lang="zh-Hans">
+    <h1>隐私政策</h1>
+    <div class="meta">最近更新：2026 年 4 月</div>
+
+    <h2>概述</h2>
+    <p>ReceiptMaster 重视你的隐私。本政策说明本 App 处理哪些数据、如何处理。简而言之：所有数据均留在你的设备上。</p>
+
+    <h2>数据仅存于本机</h2>
+    <p>你的所有收据数据——图片、文字、金额、日期——都本地存储在你设备的 SwiftData 安全存储中。我们不运营任何服务器。我们不收集、传输或出售你的任何信息。</p>
+
+    <h2>相机与相册权限</h2>
+    <p>ReceiptMaster 仅在你主动发起扫描时请求访问相机和相册。相机画面由 Apple Vision 框架在本机处理；OCR 识别的文字和你选择的收据图片会随记录保存。你未选中的照片不会被本 App 访问。</p>
+
+    <h2>端侧 AI</h2>
+    <p>在支持 Apple Intelligence 的设备上，App 会本地调用以提升票据识别精度。所有数据保留在你的设备上，不会上传，且端侧 AI 无需任何 API key 或网络连接即可工作。</p>
+
+    <h2>云端 AI（可选）</h2>
+    <p>仅当你在「设置 → AI 模型」中主动配置云端模型后，OCR 文本和聚合后的财务摘要才会通过 HTTPS 直接发送到你选择的模型方（例如 OpenAI、Anthropic、豆包、通义千问、DeepSeek 等）以完成识别 / 预测。你提供的 API key 仅存于本机 iOS Keychain。我们的服务器不参与中转，请求由你的设备直发到模型方 API。启用前请阅读对应模型方的隐私政策。</p>
+    <p>你可以随时在设置里关闭云端 AI；关闭后模型方已留存的历史使用数据不会被本 App 删除——那完全由模型方的留存政策决定，与我们无关。</p>
+
+    <h2>通知</h2>
+    <p>如果你启用退换货到期提醒，ReceiptMaster 会用 iOS 通知系统调度本地通知。这些通知由你设备的操作系统存储和发送，从不离开你的设备。</p>
+
+    <h2>iCloud 同步</h2>
+    <p>若你开启 iCloud 同步，收据数据将通过 Apple CloudKit 私有数据库在你自己的多台设备之间同步。数据保存在你个人的 iCloud 账户中，占用你自己（而非我们）的 iCloud 存储配额，我们无法访问。可在 iOS 设置 → [Apple ID] → iCloud → 使用 iCloud 的 App 中随时关闭同步。</p>
+
+    <h2>应用内购买</h2>
+    <p>若你购买 Pro 升级，交易由 Apple StoreKit 处理。ReceiptMaster 仅接收购买成功的确认，看不到你的支付详情。</p>
+
+    <h2>网络访问</h2>
+    <p>App 在常规使用下不联网。未来版本将提供手动刷新汇率的功能，通过联系公开服务（如 frankfurter.app 或 open.er-api.com）实现。请求仅包含基准货币代码（如 USD），不会包含你的任何账号或交易数据。</p>
+
+    <h2>儿童隐私</h2>
+    <p>ReceiptMaster 不针对 13 岁以下儿童，亦不会有意收集儿童数据。由于我们不收集任何数据，本 App 任何人均可安全使用。</p>
+
+    <h2>政策变更</h2>
+    <p>若未来版本更新本政策，新版本将在本页面同步显示。我们不会追溯改变对你设备上现有数据的处理方式。</p>
+
+    <h2>联系方式</h2>
+    <p>如有疑问，请联系：<a href="mailto:fantasyxxj@gmail.com">fantasyxxj@gmail.com</a></p>
+  </section>
+
+  <section class="lang" id="zh-Hant" lang="zh-Hant">
+    <h1>隱私政策</h1>
+    <div class="meta">最近更新：2026 年 4 月</div>
+
+    <h2>概述</h2>
+    <p>ReceiptMaster 重視你的隱私。本政策說明本 App 處理哪些資料、如何處理。簡而言之：所有資料均留在你的裝置上。</p>
+
+    <h2>資料僅存於本機</h2>
+    <p>你的所有收據資料——圖片、文字、金額、日期——都本地儲存在你裝置的 SwiftData 安全儲存中。我們不運營任何伺服器。我們不收集、傳輸或出售你的任何資訊。</p>
+
+    <h2>相機與相簿許可權</h2>
+    <p>ReceiptMaster 僅在你主動發起掃描時請求訪問相機和相簿。相機畫面由 Apple Vision 框架在本機處理；OCR 識別的文字和你選擇的收據圖片會隨記錄儲存。你未選中的照片不會被本 App 訪問。</p>
+
+    <h2>端側 AI</h2>
+    <p>在支援 Apple Intelligence 的裝置上，App 會本地呼叫以提升票據識別精度。所有資料保留在你的裝置上，不會上傳，且端側 AI 無需任何 API key 或網路連線即可工作。</p>
+
+    <h2>雲端 AI（可選）</h2>
+    <p>僅當你在「設定 → AI 模型」中主動配置雲端模型後，OCR 文本和聚合後的財務摘要才會透過 HTTPS 直接傳送到你選擇的模型方（例如 OpenAI、Anthropic、豆包、通義千問、DeepSeek 等）以完成識別 / 預測。你提供的 API key 僅存於本機 iOS Keychain。我們的伺服器不參與中轉，請求由你的裝置直髮到模型方 API。啟用前請閱讀對應模型方的隱私政策。</p>
+    <p>你可以隨時在設定裡關閉雲端 AI；關閉後模型方已留存的歷史使用資料不會被本 App 刪除——那完全由模型方的留存政策決定，與我們無關。</p>
+
+    <h2>通知</h2>
+    <p>如果你啟用退換貨到期提醒，ReceiptMaster 會用 iOS 通知系統排程本地通知。這些通知由你裝置的作業系統儲存和傳送，從不離開你的裝置。</p>
+
+    <h2>iCloud 同步</h2>
+    <p>若你開啟 iCloud 同步，收據資料將透過 Apple CloudKit 私有資料庫在你自己的多台裝置之間同步。資料儲存在你個人的 iCloud 帳戶中，佔用你自己（而非我們）的 iCloud 儲存配額，我們無法存取。可在 iOS 設定 → [Apple ID] → iCloud → 使用 iCloud 的 App 中隨時關閉同步。</p>
+
+    <h2>應用內購買</h2>
+    <p>若你購買 Pro 升級，交易由 Apple StoreKit 處理。ReceiptMaster 僅接收購買成功的確認，看不到你的支付詳情。</p>
+
+    <h2>網路訪問</h2>
+    <p>App 在常規使用下不聯網。未來版本將提供手動重新整理匯率的功能，透過聯絡公開服務（如 frankfurter.app 或 open.er-api.com）實現。請求僅包含基準貨幣程式碼（如 USD），不會包含你的任何賬號或交易資料。</p>
+
+    <h2>兒童隱私</h2>
+    <p>ReceiptMaster 不針對 13 歲以下兒童，亦不會有意收集兒童資料。由於我們不收集任何資料，本 App 任何人均可安全使用。</p>
+
+    <h2>政策變更</h2>
+    <p>若未來版本更新本政策，新版本將在本頁面同步顯示。我們不會追溯改變對你裝置上現有資料的處理方式。</p>
+
+    <h2>聯絡方式</h2>
+    <p>如有疑問，請聯絡：<a href="mailto:fantasyxxj@gmail.com">fantasyxxj@gmail.com</a></p>
+  </section>
+</main>
+</body>
+</html>
