@@ -1,0 +1,706 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI Setup Guide — ReceiptMaster</title>
+<style>
+  :root {
+    color-scheme: light dark;
+    --fg: #1a1a1a;
+    --bg: #ffffff;
+    --muted: #6b6b6b;
+    --link: #2557d6;
+    --border: #e5e5e5;
+    --card: #f6f6f7;
+    --rule: #ececec;
+    --warn-bg: #fff4e0;
+    --warn-fg: #8a5500;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --fg: #f1f1f1;
+      --bg: #111213;
+      --muted: #9b9b9b;
+      --link: #6ea1ff;
+      --border: #2a2c2f;
+      --card: #1c1d1f;
+      --rule: #1f2123;
+      --warn-bg: #2c2110;
+      --warn-fg: #e6b765;
+    }
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font: 16px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", "Hiragino Sans", "Noto Sans CJK JP", sans-serif;
+    color: var(--fg);
+    background: var(--bg);
+    padding: 36px 20px 80px;
+  }
+  main { max-width: 760px; margin: 0 auto; }
+  .home { display: inline-block; margin-bottom: 16px; color: var(--muted); font-size: 13px; text-decoration: none; }
+  .home:hover { text-decoration: underline; }
+  nav.langbar {
+    position: sticky;
+    top: 0;
+    background: var(--bg);
+    padding: 12px 0;
+    margin: -12px 0 16px;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 18px;
+  }
+  nav.langbar a { color: var(--link); text-decoration: none; }
+  nav.langbar a:hover { text-decoration: underline; }
+  section.lang { border-top: 1px dashed var(--rule); padding-top: 28px; margin-top: 36px; }
+  section.lang:first-of-type { border-top: none; padding-top: 0; margin-top: 0; }
+  h1 { font-size: 28px; margin: 0 0 4px; line-height: 1.25; }
+  h2 { font-size: 22px; margin: 32px 0 8px; line-height: 1.3; border-top: 1px solid var(--rule); padding-top: 24px; }
+  h3 { font-size: 16px; margin: 18px 0 6px; }
+  p { margin: 0 0 12px; }
+  ol, ul { margin: 0 0 16px; padding-left: 22px; }
+  li { margin-bottom: 6px; }
+  a { color: var(--link); }
+  code {
+    font: 13.5px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace;
+    background: var(--card);
+    padding: 1px 5px;
+    border-radius: 4px;
+  }
+  .meta { color: var(--muted); font-size: 13px; margin-bottom: 12px; }
+  .facts {
+    border: 1px solid var(--border);
+    background: var(--card);
+    border-radius: 10px;
+    padding: 12px 14px;
+    font-size: 13.5px;
+    margin: 8px 0 14px;
+  }
+  .facts dl { margin: 0; display: grid; grid-template-columns: 7em 1fr; row-gap: 4px; column-gap: 12px; }
+  .facts dt { color: var(--muted); }
+  .facts dd { margin: 0; }
+  .pitfall {
+    background: var(--warn-bg);
+    color: var(--warn-fg);
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 14px;
+    margin: 12px 0 4px;
+  }
+  .pitfall strong { font-weight: 700; }
+  .toc { font-size: 14px; padding-left: 0; list-style: none; }
+  .toc li { margin-bottom: 4px; }
+</style>
+</head>
+<body>
+<main>
+  <a class="home" href="index.html">← ReceiptMaster Legal &amp; Help</a>
+  <nav class="langbar">
+    <a href="#en">English</a>
+    <a href="#ja">日本語</a>
+    <a href="#zh-Hans">简体中文</a>
+    <a href="#zh-Hant">繁體中文</a>
+  </nav>
+
+  <!-- ============================== ENGLISH ============================== -->
+  <section class="lang" id="en" lang="en">
+    <h1>AI Setup Guide</h1>
+    <div class="meta">How to get an API key for each cloud AI provider supported by ReceiptMaster. Last updated: May 2026.</div>
+
+    <p>ReceiptMaster supports six paths for AI receipt extraction and cash-flow analysis:</p>
+    <ul class="toc">
+      <li>• <strong>Apple Intelligence</strong> — on-device, zero setup, free, but only works on iPhone 15 Pro+ / Apple Silicon iPad</li>
+      <li>• <a href="#en-openai">OpenAI</a> — most capable, most expensive, $5 minimum top-up</li>
+      <li>• <a href="#en-claude">Anthropic Claude</a> — strong at reasoning, $5 minimum, often a $5 free credit on signup</li>
+      <li>• <a href="#en-qwen-intl">Alibaba Qwen (International)</a> — generous free monthly quota, recommended for users outside China</li>
+      <li>• <a href="#en-qwen-cn">Alibaba Qwen (Mainland China)</a> — needs a Chinese ID + +86 phone</li>
+      <li>• <a href="#en-deepseek">DeepSeek</a> — cheapest paid option, OpenAI-SDK compatible</li>
+      <li>• <a href="#en-doubao">Doubao (Volcengine / BytePlus)</a> — ByteDance's Doubao models, two separate stacks</li>
+    </ul>
+    <p>If you have <strong>Apple Intelligence</strong>, use it — there's nothing to configure and it costs nothing. If your device doesn't qualify, the most popular fallbacks for ReceiptMaster users are <strong>Qwen International</strong> (free quota) and <strong>DeepSeek</strong> (cheapest).</p>
+
+    <h2 id="en-openai">OpenAI</h2>
+    <div class="facts"><dl>
+      <dt>Console</dt>           <dd><a href="https://platform.openai.com/api-keys">platform.openai.com/api-keys</a></dd>
+      <dt>Key prefix</dt>        <dd><code>sk-proj-…</code> or legacy <code>sk-…</code></dd>
+      <dt>Cheapest model</dt>    <dd>GPT-4.1 nano — $0.10 / $0.40 per 1M tokens (in/out)</dd>
+      <dt>Free tier</dt>         <dd>Effectively none in 2026 (the trial $5 credit was discontinued)</dd>
+      <dt>Min top-up</dt>        <dd>USD $5</dd>
+      <dt>Phone needed</dt>      <dd>Yes — mobile only, VoIP/Google Voice rejected</dd>
+    </dl></div>
+    <ol>
+      <li>Create an account at <a href="https://platform.openai.com/signup">platform.openai.com</a> (the ChatGPT login also works, but billing is separate).</li>
+      <li>Verify the email link.</li>
+      <li>Verify your phone via SMS — landlines and VoIP fail.</li>
+      <li>Open <strong>Settings → Billing</strong>, add a credit card, top up at least $5.</li>
+      <li>Open <strong>Dashboard → API keys → Create new secret key</strong>.</li>
+      <li>Copy the key immediately — it's only shown once.</li>
+    </ol>
+    <div class="pitfall"><strong>Pitfalls.</strong> Phone verification with VoIP / Google Voice numbers is the #1 issue. Keys created without topping up return <code>insufficient_quota</code> errors that look like rate limits. OpenAI does not serve mainland China, Russia, or sanctioned regions.</div>
+
+    <h2 id="en-claude">Anthropic Claude</h2>
+    <div class="facts"><dl>
+      <dt>Console</dt>           <dd><a href="https://platform.claude.com">platform.claude.com</a> (formerly console.anthropic.com)</dd>
+      <dt>Key prefix</dt>        <dd><code>sk-ant-api03-…</code></dd>
+      <dt>Cheapest model</dt>    <dd>Claude Haiku 4.5 — $1.00 / $5.00 per 1M tokens</dd>
+      <dt>Free tier</dt>         <dd>Up to $5 free credits on phone verification (14-day expiry); not guaranteed</dd>
+      <dt>Min top-up</dt>        <dd>USD $5 once free credits run out</dd>
+      <dt>Phone needed</dt>      <dd>Yes — US numbers most reliable; UK / VoIP rejected</dd>
+    </dl></div>
+    <ol>
+      <li>Sign up at <a href="https://platform.claude.com">platform.claude.com</a>.</li>
+      <li>Verify email.</li>
+      <li>Verify phone via SMS.</li>
+      <li>If the "Claim free credit" banner appears in <strong>Plans &amp; Billing</strong>, click it — credits start their 14-day clock.</li>
+      <li><strong>Settings → API Keys → Create Key</strong>, name it, copy the key.</li>
+      <li>Add a card in <strong>Plans &amp; Billing</strong> when you want to continue past free credits.</li>
+    </ol>
+    <div class="pitfall"><strong>Pitfalls.</strong> Phone-region restrictions are stricter than OpenAI's. The free credit clock starts when you click "Claim", not at signup — testing late means losing it. Mainland China, Russia, and several sanctioned countries are excluded.</div>
+
+    <h2 id="en-qwen-intl">Alibaba Qwen — International (Bailian / Model Studio)</h2>
+    <div class="facts"><dl>
+      <dt>Console</dt>           <dd><a href="https://bailian.console.alibabacloud.com">bailian.console.alibabacloud.com</a></dd>
+      <dt>Account signup</dt>    <dd><a href="https://account.alibabacloud.com/register/intl_register.htm">account.alibabacloud.com (international site)</a></dd>
+      <dt>Key prefix</dt>        <dd><code>sk-…</code> or workspace-scoped <code>sk-sp-…</code></dd>
+      <dt>Cheapest model</dt>    <dd>Qwen-Turbo — roughly $0.05 / $0.20 per 1M tokens (Singapore region)</dd>
+      <dt>Free tier</dt>         <dd>~1M tokens per model free in the Singapore region for new users (limited window)</dd>
+      <dt>Recommended for</dt>   <dd>Users outside mainland China who want a free starting tier</dd>
+    </dl></div>
+    <ol>
+      <li>Register at <strong>alibabacloud.com</strong> (the international site — <em>not</em> aliyun.com).</li>
+      <li>Complete identity verification (passport works for individuals).</li>
+      <li>Open the Model Studio console and accept the service terms — Bailian activates automatically.</li>
+      <li>Pick the <strong>Singapore</strong> region — it's the only region with the free new-user quota.</li>
+      <li>Open the <strong>API-KEY</strong> page and click <strong>Create API Key</strong>.</li>
+      <li>(Optional) Toggle "Free quota only" on the workspace if you want a hard-stop billing protection.</li>
+    </ol>
+    <p>Singapore base URL: <code>https://dashscope-intl.aliyuncs.com/compatible-mode/v1</code></p>
+    <div class="pitfall"><strong>Pitfalls.</strong> The biggest user error is signing up at <code>aliyun.com</code> (China site) instead of <code>alibabacloud.com</code> (international) — the Chinese site requires a Chinese ID and won't accept a foreign card. Once free quota is depleted, billing switches on automatically unless "Free quota only" is enabled. Singapore / US-Virginia / Frankfurt / HK have separate keys and base URLs — picking the wrong one silently 401s.</div>
+
+    <h2 id="en-qwen-cn">Alibaba Qwen — Mainland China</h2>
+    <div class="facts"><dl>
+      <dt>Console</dt>           <dd><a href="https://bailian.console.aliyun.com">bailian.console.aliyun.com</a></dd>
+      <dt>Account signup</dt>    <dd><a href="https://account.aliyun.com">account.aliyun.com</a></dd>
+      <dt>Key prefix</dt>        <dd><code>sk-…</code></dd>
+      <dt>Cheapest model</dt>    <dd>Qwen-Turbo — ~¥0.3 / ¥0.6 per 1M tokens</dd>
+      <dt>Free tier</dt>         <dd>1,000,000 tokens per model, valid 180 days</dd>
+      <dt>Required</dt>          <dd>Chinese national ID + +86 phone (real-name authentication)</dd>
+    </dl></div>
+    <ol>
+      <li>Register at aliyun.com with a +86 phone number.</li>
+      <li>Complete <strong>实名认证</strong> (real-name authentication — personal or enterprise).</li>
+      <li>Visit bailian.console.aliyun.com and accept the service terms.</li>
+      <li>If a "尚未实名" prompt appears, return to the account center and finish ID verification first.</li>
+      <li>In the left navigation, open <strong>API-KEY</strong> → <strong>创建我的 API-KEY</strong>.</li>
+      <li>Copy the <code>sk-…</code> key.</li>
+    </ol>
+    <p>Mainland base URL: <code>https://dashscope.aliyuncs.com/compatible-mode/v1</code></p>
+    <div class="pitfall"><strong>Pitfalls.</strong> Foreign passports are not accepted on aliyun.com — foreign users should use the international Bailian instead. Mainland keys do <em>not</em> work against the international <code>dashscope-intl</code> endpoint, and vice versa. Free credits silently expire at 180 days.</div>
+
+    <h2 id="en-deepseek">DeepSeek</h2>
+    <div class="facts"><dl>
+      <dt>Console</dt>           <dd><a href="https://platform.deepseek.com/api_keys">platform.deepseek.com/api_keys</a></dd>
+      <dt>Key prefix</dt>        <dd><code>sk-…</code></dd>
+      <dt>Cheapest model</dt>    <dd>deepseek-v4-flash — $0.14 / $0.28 per 1M tokens</dd>
+      <dt>Free tier</dt>         <dd>Promotional only — verify the live banner; do not assume</dd>
+      <dt>Min top-up</dt>        <dd>~¥10 / $2</dd>
+      <dt>Recommended for</dt>   <dd>Cheapest paid option; OpenAI-SDK compatible</dd>
+    </dl></div>
+    <ol>
+      <li>Visit <a href="https://platform.deepseek.com">platform.deepseek.com</a> and sign up (email or SSO via WeChat / Google / phone).</li>
+      <li>Verify email.</li>
+      <li>Open <strong>API Keys → Create API Key</strong>, name it, copy.</li>
+      <li>Open <strong>Top up</strong> and add credit. Foreign users pick the USD/Stripe path; CN users pick Alipay/WeChat.</li>
+      <li>Set the SDK base URL to <code>https://api.deepseek.com</code> (OpenAI-SDK compatible).</li>
+    </ol>
+    <div class="pitfall"><strong>Pitfalls.</strong> Old code referencing <code>deepseek-chat</code> / <code>deepseek-reasoner</code> will break after July 2026 — point new configs at <code>deepseek-v4-flash</code> from day one. The console UI defaults to Chinese; the English toggle is in the top-right corner.</div>
+
+    <h2 id="en-doubao">Doubao (Volcengine Ark / BytePlus ModelArk)</h2>
+    <p>ByteDance runs two separate stacks for the same Doubao models. Pick by where you are:</p>
+
+    <h3>Volcengine Ark — mainland China</h3>
+    <div class="facts"><dl>
+      <dt>Console</dt>           <dd><a href="https://console.volcengine.com/ark">console.volcengine.com/ark</a></dd>
+      <dt>Key format</dt>        <dd>Raw UUID-style (no <code>sk-</code> prefix)</dd>
+      <dt>Cheapest model</dt>    <dd>Doubao-1.5-lite-32k — ~¥0.3 / ¥0.6 per 1M tokens</dd>
+      <dt>Free tier</dt>         <dd>500,000 tokens per activated model; rotating "成长奖励" promotions</dd>
+      <dt>Required</dt>          <dd>+86 phone + Chinese real-name authentication</dd>
+    </dl></div>
+    <ol>
+      <li>Register at volcengine.com with +86 phone.</li>
+      <li>Complete 实名认证.</li>
+      <li>Top nav: <strong>大模型 → 火山方舟</strong>, scroll to <strong>API 接入</strong>.</li>
+      <li><strong>API Key 管理 → 创建 API Key</strong> → copy.</li>
+      <li>Open <strong>模型推理</strong>, find each Doubao model (e.g. Doubao-1.5-pro-32k) and click <strong>开通服务</strong>. Models do <em>not</em> work until activated.</li>
+      <li>Use the <strong>endpoint ID</strong> (<code>ep-…</code>) in your code — the model name is not the ID.</li>
+    </ol>
+
+    <h3>BytePlus ModelArk — international</h3>
+    <div class="facts"><dl>
+      <dt>Console</dt>           <dd><a href="https://console.byteplus.com">console.byteplus.com</a></dd>
+      <dt>Required</dt>          <dd>Email + identity verification (passport accepted); USD card</dd>
+      <dt>Region</dt>            <dd><code>ap-southeast-1</code> (Singapore)</dd>
+    </dl></div>
+    <ol>
+      <li>Register at byteplus.com (separate from volcengine.com).</li>
+      <li>Complete identity verification.</li>
+      <li>Pick <strong>ap-southeast-1</strong>; most Doubao/Seed models live there.</li>
+      <li>Open ModelArk → <strong>API Key Management → Create API Key</strong>, copy.</li>
+      <li>Activate the specific model in the Model list.</li>
+    </ol>
+    <div class="pitfall"><strong>Pitfalls.</strong> BytePlus and Volcengine are completely separate accounts — keys, billing, and even available models do <em>not</em> cross over. The two-step "create key + activate each model + use endpoint ID" flow on Volcengine is uniquely confusing — pasting the model name instead of the endpoint ID returns 404.</div>
+  </section>
+
+  <!-- ============================== JAPANESE ============================== -->
+  <section class="lang" id="ja" lang="ja">
+    <h1>AI 設定ガイド</h1>
+    <div class="meta">ReceiptMaster がサポートする各クラウド AI プロバイダの API キー取得手順。最終更新: 2026 年 5 月。</div>
+
+    <p>ReceiptMaster はレシート抽出とキャッシュフロー分析のために 6 種類の AI 経路をサポートします:</p>
+    <ul class="toc">
+      <li>• <strong>Apple Intelligence</strong> — オンデバイス、設定不要、無料。iPhone 15 Pro+ / Apple Silicon iPad のみ対応</li>
+      <li>• <a href="#ja-openai">OpenAI</a> — 最高性能、最高料金、最低 $5 のチャージ</li>
+      <li>• <a href="#ja-claude">Anthropic Claude</a> — 推論に強い、最低 $5、登録時に $5 の無料クレジットがあることが多い</li>
+      <li>• <a href="#ja-qwen-intl">Alibaba Qwen（国際版）</a> — 月毎の無料枠が豊富、海外ユーザー推奨</li>
+      <li>• <a href="#ja-qwen-cn">Alibaba Qwen（中国本土版）</a> — 中国の身分証 + +86 番号必須</li>
+      <li>• <a href="#ja-deepseek">DeepSeek</a> — 最安の有料サービス、OpenAI SDK 互換</li>
+      <li>• <a href="#ja-doubao">Doubao（Volcengine / BytePlus）</a> — ByteDance の Doubao モデル、2 つ別系統</li>
+    </ul>
+    <p><strong>Apple Intelligence</strong> が利用可能ならそれを使ってください — 設定も料金も不要です。対応していない場合、ReceiptMaster ユーザーで人気の選択肢は <strong>Qwen 国際版</strong>（無料枠）と <strong>DeepSeek</strong>（最安）です。</p>
+
+    <h2 id="ja-openai">OpenAI</h2>
+    <div class="facts"><dl>
+      <dt>コンソール</dt>     <dd><a href="https://platform.openai.com/api-keys">platform.openai.com/api-keys</a></dd>
+      <dt>キー接頭辞</dt>     <dd><code>sk-proj-…</code> またはレガシー <code>sk-…</code></dd>
+      <dt>最安モデル</dt>     <dd>GPT-4.1 nano — 100 万トークンあたり $0.10 / $0.40（入/出）</dd>
+      <dt>無料枠</dt>         <dd>2026 年現在ほぼなし（試用 $5 クレジットは廃止）</dd>
+      <dt>最低チャージ</dt>   <dd>USD $5</dd>
+      <dt>電話必須</dt>       <dd>はい — 携帯電話のみ。VoIP / Google Voice は拒否</dd>
+    </dl></div>
+    <ol>
+      <li><a href="https://platform.openai.com/signup">platform.openai.com</a> でアカウント作成（ChatGPT のログインも使えるが課金は別）。</li>
+      <li>メールリンクで認証。</li>
+      <li>SMS で電話認証 — 固定電話と VoIP は通らない。</li>
+      <li><strong>Settings → Billing</strong> でクレジットカード追加、$5 以上チャージ。</li>
+      <li><strong>Dashboard → API keys → Create new secret key</strong>。</li>
+      <li>キーをすぐコピー — 一度しか表示されません。</li>
+    </ol>
+    <div class="pitfall"><strong>注意点。</strong> VoIP / Google Voice での電話認証失敗が最多のトラブル。チャージ前に作成したキーは <code>insufficient_quota</code> エラーが返り、レート制限のように見えるが実は課金未設定。中国本土・ロシア・制裁対象地域からは利用不可。</div>
+
+    <h2 id="ja-claude">Anthropic Claude</h2>
+    <div class="facts"><dl>
+      <dt>コンソール</dt>     <dd><a href="https://platform.claude.com">platform.claude.com</a>（旧 console.anthropic.com）</dd>
+      <dt>キー接頭辞</dt>     <dd><code>sk-ant-api03-…</code></dd>
+      <dt>最安モデル</dt>     <dd>Claude Haiku 4.5 — 100 万トークンあたり $1.00 / $5.00</dd>
+      <dt>無料枠</dt>         <dd>電話認証で最大 $5 のクレジット（14 日有効、保証なし）</dd>
+      <dt>最低チャージ</dt>   <dd>無料枠終了後 USD $5</dd>
+      <dt>電話必須</dt>       <dd>はい — 米国番号が最も確実、英国 / VoIP は拒否</dd>
+    </dl></div>
+    <ol>
+      <li><a href="https://platform.claude.com">platform.claude.com</a> で登録。</li>
+      <li>メール認証。</li>
+      <li>SMS で電話認証。</li>
+      <li><strong>Plans &amp; Billing</strong> に「Claim free credit」バナーがあればクリック — クリック時点から 14 日のカウントが始まる。</li>
+      <li><strong>Settings → API Keys → Create Key</strong>、名前を付けてコピー。</li>
+      <li>無料枠を超えて使う際は <strong>Plans &amp; Billing</strong> でカード追加。</li>
+    </ol>
+    <div class="pitfall"><strong>注意点。</strong> 電話認証の地域制限が OpenAI より厳しい。無料クレジットの期限は登録ではなく Claim クリック時から開始 — テストが遅れると失効。中国本土・ロシア他、制裁対象国は除外。</div>
+
+    <h2 id="ja-qwen-intl">Alibaba Qwen — 国際版（Bailian / Model Studio）</h2>
+    <div class="facts"><dl>
+      <dt>コンソール</dt>     <dd><a href="https://bailian.console.alibabacloud.com">bailian.console.alibabacloud.com</a></dd>
+      <dt>登録</dt>           <dd><a href="https://account.alibabacloud.com/register/intl_register.htm">account.alibabacloud.com（国際サイト）</a></dd>
+      <dt>キー接頭辞</dt>     <dd><code>sk-…</code> またはワークスペース版 <code>sk-sp-…</code></dd>
+      <dt>最安モデル</dt>     <dd>Qwen-Turbo — シンガポールリージョンで 100 万トークン約 $0.05 / $0.20</dd>
+      <dt>無料枠</dt>         <dd>シンガポールリージョンの新規ユーザーにモデル毎約 100 万トークン</dd>
+      <dt>推奨対象</dt>       <dd>無料枠で始めたい中国本土外のユーザー</dd>
+    </dl></div>
+    <ol>
+      <li><strong>alibabacloud.com</strong> で登録（aliyun.com ではなく国際サイト）。</li>
+      <li>本人確認（個人ならパスポート可）。</li>
+      <li>Model Studio コンソールを開いて利用規約に同意 — Bailian は自動で有効化。</li>
+      <li><strong>シンガポール</strong>リージョンを選択 — 新規ユーザー無料枠があるのはここだけ。</li>
+      <li><strong>API-KEY</strong> ページで <strong>Create API Key</strong>。</li>
+      <li>（任意）課金保護のため「Free quota only」をワークスペースで有効化。</li>
+    </ol>
+    <p>シンガポールベース URL: <code>https://dashscope-intl.aliyuncs.com/compatible-mode/v1</code></p>
+    <div class="pitfall"><strong>注意点。</strong> 最大の誤りは <code>aliyun.com</code>（中国版）で登録してしまうこと — 中国版は中国の身分証が必要で海外カードを受け付けない。無料枠が尽きると自動で課金開始、「Free quota only」を有効にしないと止まらない。シンガポール / バージニア / フランクフルト / 香港はキーもベース URL も別 — 間違えると 401 エラー。</div>
+
+    <h2 id="ja-qwen-cn">Alibaba Qwen — 中国本土版</h2>
+    <div class="facts"><dl>
+      <dt>コンソール</dt>     <dd><a href="https://bailian.console.aliyun.com">bailian.console.aliyun.com</a></dd>
+      <dt>登録</dt>           <dd><a href="https://account.aliyun.com">account.aliyun.com</a></dd>
+      <dt>キー接頭辞</dt>     <dd><code>sk-…</code></dd>
+      <dt>最安モデル</dt>     <dd>Qwen-Turbo — 100 万トークン約 ¥0.3 / ¥0.6</dd>
+      <dt>無料枠</dt>         <dd>モデル毎 100 万トークン、180 日有効</dd>
+      <dt>必須</dt>           <dd>中国の身分証 + +86 番号（実名認証）</dd>
+    </dl></div>
+    <ol>
+      <li>+86 番号で aliyun.com に登録。</li>
+      <li><strong>实名认证</strong>（個人または企業）。</li>
+      <li>bailian.console.aliyun.com で利用規約に同意。</li>
+      <li>「尚未实名」と表示されたら先に身分証認証を完了。</li>
+      <li>左メニュー <strong>API-KEY</strong> → <strong>创建我的 API-KEY</strong>。</li>
+      <li><code>sk-…</code> キーをコピー。</li>
+    </ol>
+    <p>本土版ベース URL: <code>https://dashscope.aliyuncs.com/compatible-mode/v1</code></p>
+    <div class="pitfall"><strong>注意点。</strong> aliyun.com は外国パスポート不可 — 海外ユーザーは国際版 Bailian を使ってください。本土キーは <code>dashscope-intl</code> エンドポイントでは動作しない（逆も同様）。無料クレジットは 180 日で静かに失効。</div>
+
+    <h2 id="ja-deepseek">DeepSeek</h2>
+    <div class="facts"><dl>
+      <dt>コンソール</dt>     <dd><a href="https://platform.deepseek.com/api_keys">platform.deepseek.com/api_keys</a></dd>
+      <dt>キー接頭辞</dt>     <dd><code>sk-…</code></dd>
+      <dt>最安モデル</dt>     <dd>deepseek-v4-flash — 100 万トークン $0.14 / $0.28</dd>
+      <dt>無料枠</dt>         <dd>キャンペーン次第 — 現在のバナーで確認</dd>
+      <dt>最低チャージ</dt>   <dd>約 ¥10 / $2</dd>
+      <dt>推奨対象</dt>       <dd>最安の有料サービス、OpenAI SDK 互換</dd>
+    </dl></div>
+    <ol>
+      <li><a href="https://platform.deepseek.com">platform.deepseek.com</a> で登録（メールまたは WeChat / Google / 電話 SSO）。</li>
+      <li>メール認証。</li>
+      <li><strong>API Keys → Create API Key</strong>、名前を付けてコピー。</li>
+      <li><strong>Top up</strong> でチャージ。海外ユーザーは USD/Stripe、中国ユーザーは Alipay/WeChat。</li>
+      <li>SDK のベース URL を <code>https://api.deepseek.com</code> に設定（OpenAI SDK 互換）。</li>
+    </ol>
+    <div class="pitfall"><strong>注意点。</strong> 古いコードの <code>deepseek-chat</code> / <code>deepseek-reasoner</code> は 2026 年 7 月以降廃止 — 新規は最初から <code>deepseek-v4-flash</code> を指す。コンソール UI はデフォルト中国語、英語切替は右上。</div>
+
+    <h2 id="ja-doubao">Doubao（Volcengine Ark / BytePlus ModelArk）</h2>
+    <p>ByteDance は同じ Doubao モデルを 2 つの別系統で提供しています:</p>
+
+    <h3>Volcengine Ark — 中国本土向け</h3>
+    <div class="facts"><dl>
+      <dt>コンソール</dt>     <dd><a href="https://console.volcengine.com/ark">console.volcengine.com/ark</a></dd>
+      <dt>キー形式</dt>       <dd>UUID 形式（<code>sk-</code> 接頭辞なし）</dd>
+      <dt>最安モデル</dt>     <dd>Doubao-1.5-lite-32k — 100 万トークン約 ¥0.3 / ¥0.6</dd>
+      <dt>無料枠</dt>         <dd>有効化したモデル毎 50 万トークン、ローテーションキャンペーンあり</dd>
+      <dt>必須</dt>           <dd>+86 番号 + 中国実名認証</dd>
+    </dl></div>
+    <ol>
+      <li>+86 番号で volcengine.com に登録。</li>
+      <li>实名认证完了。</li>
+      <li>トップメニュー <strong>大模型 → 火山方舟</strong>、<strong>API 接入</strong>へスクロール。</li>
+      <li><strong>API Key 管理 → 创建 API Key</strong> でコピー。</li>
+      <li><strong>模型推理</strong>で各 Doubao モデル（例 Doubao-1.5-pro-32k）の <strong>开通服务</strong>をクリック。有効化しないと動かない。</li>
+      <li>コードでは<strong>エンドポイント ID</strong>（<code>ep-…</code>）を使う — モデル名は ID ではない。</li>
+    </ol>
+
+    <h3>BytePlus ModelArk — 国際版</h3>
+    <div class="facts"><dl>
+      <dt>コンソール</dt>     <dd><a href="https://console.byteplus.com">console.byteplus.com</a></dd>
+      <dt>必須</dt>           <dd>メール + 本人確認（パスポート可）、USD カード</dd>
+      <dt>リージョン</dt>     <dd><code>ap-southeast-1</code>（シンガポール）</dd>
+    </dl></div>
+    <ol>
+      <li>byteplus.com で登録（volcengine.com とは別）。</li>
+      <li>本人確認。</li>
+      <li><strong>ap-southeast-1</strong>を選択 — Doubao/Seed モデルの大半がここ。</li>
+      <li>ModelArk → <strong>API Key Management → Create API Key</strong>、コピー。</li>
+      <li>モデルリストで使うモデルを有効化。</li>
+    </ol>
+    <div class="pitfall"><strong>注意点。</strong> BytePlus と Volcengine は完全に別アカウント — キーも課金もモデルも互換性なし。Volcengine の「キー作成 + モデル個別有効化 + エンドポイント ID 使用」フローは特に分かりにくい。モデル名を貼り付けると 404 エラー。</div>
+  </section>
+
+  <!-- ============================== ZH-HANS ============================== -->
+  <section class="lang" id="zh-Hans" lang="zh-Hans">
+    <h1>AI 配置教程</h1>
+    <div class="meta">ReceiptMaster 支持的各家云端 AI 模型 API key 申请图文教程。最近更新：2026 年 5 月。</div>
+
+    <p>ReceiptMaster 支持 6 种 AI 路径处理票据识别和现金流分析：</p>
+    <ul class="toc">
+      <li>• <strong>Apple Intelligence</strong>——端侧、零配置、永久免费，仅 iPhone 15 Pro+ / Apple Silicon iPad 支持</li>
+      <li>• <a href="#zh-Hans-openai">OpenAI</a>——最强、最贵，最低充值 $5</li>
+      <li>• <a href="#zh-Hans-claude">Anthropic Claude</a>——推理强，最低 $5，注册常送 $5 免费额度</li>
+      <li>• <a href="#zh-Hans-qwen-intl">阿里千问（国际版）</a>——月度免费额度大，海外用户推荐</li>
+      <li>• <a href="#zh-Hans-qwen-cn">阿里千问（中国本土版）</a>——需要中国身份证 + +86 手机号</li>
+      <li>• <a href="#zh-Hans-deepseek">DeepSeek</a>——最便宜的付费方案，OpenAI SDK 兼容</li>
+      <li>• <a href="#zh-Hans-doubao">豆包（火山方舟 / BytePlus）</a>——字节跳动豆包模型，两套独立系统</li>
+    </ul>
+    <p>设备支持 <strong>Apple Intelligence</strong> 就用它——零配置、零费用。不支持的话，海外用户最常选 <strong>千问国际版</strong>（免费额度大）和 <strong>DeepSeek</strong>（最便宜）。</p>
+
+    <h2 id="zh-Hans-openai">OpenAI</h2>
+    <div class="facts"><dl>
+      <dt>控制台</dt>      <dd><a href="https://platform.openai.com/api-keys">platform.openai.com/api-keys</a></dd>
+      <dt>Key 前缀</dt>    <dd><code>sk-proj-…</code> 或旧版 <code>sk-…</code></dd>
+      <dt>最便宜模型</dt>  <dd>GPT-4.1 nano — 每百万 tokens $0.10 / $0.40（输入/输出）</dd>
+      <dt>免费额度</dt>    <dd>2026 年基本没有了（早期 $5 试用额度已停发）</dd>
+      <dt>最低充值</dt>    <dd>USD $5</dd>
+      <dt>需要手机</dt>    <dd>是 — 仅手机号，VoIP/Google Voice 都拒绝</dd>
+    </dl></div>
+    <ol>
+      <li>到 <a href="https://platform.openai.com/signup">platform.openai.com</a> 注册账号（ChatGPT 账号也能登，但计费独立）。</li>
+      <li>验证邮箱链接。</li>
+      <li>短信验证手机——固话和 VoIP 都通不过。</li>
+      <li>进 <strong>Settings → Billing</strong>，绑信用卡，至少充值 $5。</li>
+      <li>进 <strong>Dashboard → API keys → Create new secret key</strong>。</li>
+      <li>立刻复制 key——只显示一次。</li>
+    </ol>
+    <div class="pitfall"><strong>易错点。</strong> VoIP / Google Voice 验证失败是头号问题。没充值就创建的 key 调用时会报 <code>insufficient_quota</code>，看起来像限流其实是没钱。OpenAI 不向中国大陆、俄罗斯、制裁地区提供服务。</div>
+
+    <h2 id="zh-Hans-claude">Anthropic Claude</h2>
+    <div class="facts"><dl>
+      <dt>控制台</dt>      <dd><a href="https://platform.claude.com">platform.claude.com</a>（原 console.anthropic.com）</dd>
+      <dt>Key 前缀</dt>    <dd><code>sk-ant-api03-…</code></dd>
+      <dt>最便宜模型</dt>  <dd>Claude Haiku 4.5 — 每百万 tokens $1.00 / $5.00</dd>
+      <dt>免费额度</dt>    <dd>电话验证后最高 $5 免费额度（14 天有效，不保证有）</dd>
+      <dt>最低充值</dt>    <dd>免费额度用完后 USD $5</dd>
+      <dt>需要手机</dt>    <dd>是 — 美国号码最稳，英国 / VoIP 不行</dd>
+    </dl></div>
+    <ol>
+      <li>到 <a href="https://platform.claude.com">platform.claude.com</a> 注册。</li>
+      <li>邮箱验证。</li>
+      <li>短信验证手机。</li>
+      <li>如果 <strong>Plans &amp; Billing</strong> 出现"Claim free credit"按钮，点了——14 天倒计时从这一刻开始。</li>
+      <li><strong>Settings → API Keys → Create Key</strong>，命名后复制。</li>
+      <li>免费额度用完后到 <strong>Plans &amp; Billing</strong> 绑卡。</li>
+    </ol>
+    <div class="pitfall"><strong>易错点。</strong> 手机号地区限制比 OpenAI 严格。免费额度的 14 天从你点 Claim 开始算，不是注册——拖着不测会过期。中国大陆、俄罗斯及多个制裁国家不开放。</div>
+
+    <h2 id="zh-Hans-qwen-intl">阿里千问 — 国际版（Bailian / Model Studio）</h2>
+    <div class="facts"><dl>
+      <dt>控制台</dt>      <dd><a href="https://bailian.console.alibabacloud.com">bailian.console.alibabacloud.com</a></dd>
+      <dt>账号注册</dt>    <dd><a href="https://account.alibabacloud.com/register/intl_register.htm">account.alibabacloud.com（国际站）</a></dd>
+      <dt>Key 前缀</dt>    <dd><code>sk-…</code> 或工作区 <code>sk-sp-…</code></dd>
+      <dt>最便宜模型</dt>  <dd>Qwen-Turbo — 新加坡区域每百万 tokens 约 $0.05 / $0.20</dd>
+      <dt>免费额度</dt>    <dd>新加坡区域新用户每个模型约 100 万 tokens 免费额度（限时）</dd>
+      <dt>推荐对象</dt>    <dd>中国大陆以外用户，想免费起步</dd>
+    </dl></div>
+    <ol>
+      <li>到 <strong>alibabacloud.com</strong>（国际站，<em>不是</em> aliyun.com）注册。</li>
+      <li>完成实名认证（个人用护照即可）。</li>
+      <li>打开 Model Studio 控制台，同意服务条款 — Bailian 自动开通。</li>
+      <li>选 <strong>Singapore</strong> 区域 — 只有这个区域有新用户免费额度。</li>
+      <li>到 <strong>API-KEY</strong> 页面点 <strong>Create API Key</strong>。</li>
+      <li>（可选）开"Free quota only"做硬性账单保护。</li>
+    </ol>
+    <p>新加坡 base URL：<code>https://dashscope-intl.aliyuncs.com/compatible-mode/v1</code></p>
+    <div class="pitfall"><strong>易错点。</strong> 最常见错误是注册到 <code>aliyun.com</code>（中国站）而不是 <code>alibabacloud.com</code>（国际站）——中国站要中国身份证、海外卡也不能付。免费额度用完会自动开始扣费，除非开了"Free quota only"。新加坡 / 美东 / 法兰克福 / 香港四个区域 key 和 base URL 都不通用，选错会 401。</div>
+
+    <h2 id="zh-Hans-qwen-cn">阿里千问 — 中国本土版</h2>
+    <div class="facts"><dl>
+      <dt>控制台</dt>      <dd><a href="https://bailian.console.aliyun.com">bailian.console.aliyun.com</a></dd>
+      <dt>账号注册</dt>    <dd><a href="https://account.aliyun.com">account.aliyun.com</a></dd>
+      <dt>Key 前缀</dt>    <dd><code>sk-…</code></dd>
+      <dt>最便宜模型</dt>  <dd>Qwen-Turbo — 每百万 tokens 约 ¥0.3 / ¥0.6</dd>
+      <dt>免费额度</dt>    <dd>每个模型 100 万 tokens，180 天有效</dd>
+      <dt>必须</dt>        <dd>中国身份证 + +86 手机号（实名认证）</dd>
+    </dl></div>
+    <ol>
+      <li>用 +86 手机号在 aliyun.com 注册。</li>
+      <li>完成<strong>实名认证</strong>（个人或企业）。</li>
+      <li>访问 bailian.console.aliyun.com 同意服务条款。</li>
+      <li>如果提示"尚未实名"，回账号中心先完成身份证认证。</li>
+      <li>左侧导航打开 <strong>API-KEY</strong> → <strong>创建我的 API-KEY</strong>。</li>
+      <li>复制 <code>sk-…</code> 开头的 key。</li>
+    </ol>
+    <p>本土版 base URL：<code>https://dashscope.aliyuncs.com/compatible-mode/v1</code></p>
+    <div class="pitfall"><strong>易错点。</strong> aliyun.com 不接受外国护照——海外用户走国际版 Bailian。本土版的 key 不能用于 <code>dashscope-intl</code> 端点（反之亦然）。免费额度 180 天悄悄过期。</div>
+
+    <h2 id="zh-Hans-deepseek">DeepSeek</h2>
+    <div class="facts"><dl>
+      <dt>控制台</dt>      <dd><a href="https://platform.deepseek.com/api_keys">platform.deepseek.com/api_keys</a></dd>
+      <dt>Key 前缀</dt>    <dd><code>sk-…</code></dd>
+      <dt>最便宜模型</dt>  <dd>deepseek-v4-flash — 每百万 tokens $0.14 / $0.28</dd>
+      <dt>免费额度</dt>    <dd>看活动 — 以控制台横幅为准</dd>
+      <dt>最低充值</dt>    <dd>约 ¥10 / $2</dd>
+      <dt>推荐对象</dt>    <dd>付费方案里最便宜，OpenAI SDK 兼容</dd>
+    </dl></div>
+    <ol>
+      <li>访问 <a href="https://platform.deepseek.com">platform.deepseek.com</a> 注册（邮箱或微信 / Google / 手机号 SSO 都行）。</li>
+      <li>邮箱验证。</li>
+      <li>打开 <strong>API Keys → Create API Key</strong>，命名后复制。</li>
+      <li>到 <strong>Top up</strong> 充值。海外用 USD/Stripe，国内用支付宝/微信。</li>
+      <li>SDK 的 base URL 设成 <code>https://api.deepseek.com</code>（OpenAI SDK 兼容）。</li>
+    </ol>
+    <div class="pitfall"><strong>易错点。</strong> 老代码里的 <code>deepseek-chat</code> / <code>deepseek-reasoner</code> 在 2026 年 7 月后失效——新配置直接用 <code>deepseek-v4-flash</code>。控制台默认中文，英文切换在右上角。</div>
+
+    <h2 id="zh-Hans-doubao">豆包（火山方舟 / BytePlus ModelArk）</h2>
+    <p>字节跳动用两套独立系统提供同样的豆包模型，按你所在地选：</p>
+
+    <h3>火山方舟 Volcengine Ark — 中国本土</h3>
+    <div class="facts"><dl>
+      <dt>控制台</dt>      <dd><a href="https://console.volcengine.com/ark">console.volcengine.com/ark</a></dd>
+      <dt>Key 格式</dt>    <dd>UUID 格式（没有 <code>sk-</code> 前缀）</dd>
+      <dt>最便宜模型</dt>  <dd>Doubao-1.5-lite-32k — 每百万 tokens 约 ¥0.3 / ¥0.6</dd>
+      <dt>免费额度</dt>    <dd>每个开通的模型 50 万 tokens，外加滚动"成长奖励"活动</dd>
+      <dt>必须</dt>        <dd>+86 手机号 + 中国实名认证</dd>
+    </dl></div>
+    <ol>
+      <li>用 +86 手机号在 volcengine.com 注册。</li>
+      <li>完成实名认证。</li>
+      <li>顶栏 <strong>大模型 → 火山方舟</strong>，滚到 <strong>API 接入</strong>。</li>
+      <li><strong>API Key 管理 → 创建 API Key</strong>，复制。</li>
+      <li>到 <strong>模型推理</strong>，找到要用的 Doubao 模型（如 Doubao-1.5-pro-32k），点 <strong>开通服务</strong>。模型不开通就不能用。</li>
+      <li>代码里要用<strong>接入点 ID</strong>（<code>ep-…</code>）——模型名不是 ID。</li>
+    </ol>
+
+    <h3>BytePlus ModelArk — 国际版</h3>
+    <div class="facts"><dl>
+      <dt>控制台</dt>      <dd><a href="https://console.byteplus.com">console.byteplus.com</a></dd>
+      <dt>必须</dt>        <dd>邮箱 + 本人验证（护照可），USD 卡支付</dd>
+      <dt>区域</dt>        <dd><code>ap-southeast-1</code>（新加坡）</dd>
+    </dl></div>
+    <ol>
+      <li>到 byteplus.com 注册（跟 volcengine.com 不互通）。</li>
+      <li>完成本人验证。</li>
+      <li>选 <strong>ap-southeast-1</strong>，多数 Doubao/Seed 模型在这里。</li>
+      <li>ModelArk → <strong>API Key Management → Create API Key</strong>，复制。</li>
+      <li>到模型列表激活要用的模型。</li>
+    </ol>
+    <div class="pitfall"><strong>易错点。</strong> BytePlus 和火山方舟是完全独立账号——key、计费、可用模型都不互通。火山方舟"建 key + 单独激活每个模型 + 用接入点 ID"流程特别容易踩坑——把模型名当 ID 贴进去会 404。</div>
+  </section>
+
+  <!-- ============================== ZH-HANT ============================== -->
+  <section class="lang" id="zh-Hant" lang="zh-Hant">
+    <h1>AI 設定教學</h1>
+    <div class="meta">ReceiptMaster 支援的各家雲端 AI 模型 API key 申請圖文教學。最近更新：2026 年 5 月。</div>
+
+    <p>ReceiptMaster 支援 6 種 AI 路徑處理票據識別和現金流分析：</p>
+    <ul class="toc">
+      <li>• <strong>Apple Intelligence</strong>——端側、零設定、永久免費，僅 iPhone 15 Pro+ / Apple Silicon iPad 支援</li>
+      <li>• <a href="#zh-Hant-openai">OpenAI</a>——最強、最貴，最低儲值 $5</li>
+      <li>• <a href="#zh-Hant-claude">Anthropic Claude</a>——推理強，最低 $5，註冊常送 $5 免費額度</li>
+      <li>• <a href="#zh-Hant-qwen-intl">阿里千問（國際版）</a>——月度免費額度多，海外使用者推薦</li>
+      <li>• <a href="#zh-Hant-qwen-cn">阿里千問（中國本土版）</a>——需要中國身分證 + +86 手機號</li>
+      <li>• <a href="#zh-Hant-deepseek">DeepSeek</a>——最便宜的付費方案，OpenAI SDK 相容</li>
+      <li>• <a href="#zh-Hant-doubao">豆包（火山方舟 / BytePlus）</a>——位元組跳動豆包模型，兩套獨立系統</li>
+    </ul>
+    <p>裝置支援 <strong>Apple Intelligence</strong> 就用它——零設定、零費用。不支援的話，海外使用者最常選 <strong>千問國際版</strong>（免費額度多）和 <strong>DeepSeek</strong>（最便宜）。</p>
+
+    <h2 id="zh-Hant-openai">OpenAI</h2>
+    <div class="facts"><dl>
+      <dt>控制台</dt>      <dd><a href="https://platform.openai.com/api-keys">platform.openai.com/api-keys</a></dd>
+      <dt>Key 前綴</dt>    <dd><code>sk-proj-…</code> 或舊版 <code>sk-…</code></dd>
+      <dt>最便宜模型</dt>  <dd>GPT-4.1 nano — 每百萬 tokens $0.10 / $0.40（輸入/輸出）</dd>
+      <dt>免費額度</dt>    <dd>2026 年基本沒有了（早期 $5 試用額度已停發）</dd>
+      <dt>最低儲值</dt>    <dd>USD $5</dd>
+      <dt>需要手機</dt>    <dd>是 — 僅手機號，VoIP/Google Voice 都拒絕</dd>
+    </dl></div>
+    <ol>
+      <li>到 <a href="https://platform.openai.com/signup">platform.openai.com</a> 註冊帳號（ChatGPT 帳號也能登，但計費獨立）。</li>
+      <li>驗證信箱連結。</li>
+      <li>簡訊驗證手機——市話和 VoIP 都通不過。</li>
+      <li>進 <strong>Settings → Billing</strong>，綁信用卡，至少儲值 $5。</li>
+      <li>進 <strong>Dashboard → API keys → Create new secret key</strong>。</li>
+      <li>立即複製 key——只顯示一次。</li>
+    </ol>
+    <div class="pitfall"><strong>易錯點。</strong> VoIP / Google Voice 驗證失敗是頭號問題。沒儲值就建立的 key 呼叫時會回 <code>insufficient_quota</code>，看起來像限流其實是沒錢。OpenAI 不向中國大陸、俄羅斯、制裁地區提供服務。</div>
+
+    <h2 id="zh-Hant-claude">Anthropic Claude</h2>
+    <div class="facts"><dl>
+      <dt>控制台</dt>      <dd><a href="https://platform.claude.com">platform.claude.com</a>（原 console.anthropic.com）</dd>
+      <dt>Key 前綴</dt>    <dd><code>sk-ant-api03-…</code></dd>
+      <dt>最便宜模型</dt>  <dd>Claude Haiku 4.5 — 每百萬 tokens $1.00 / $5.00</dd>
+      <dt>免費額度</dt>    <dd>電話驗證後最高 $5 免費額度（14 天有效，不保證有）</dd>
+      <dt>最低儲值</dt>    <dd>免費額度用完後 USD $5</dd>
+      <dt>需要手機</dt>    <dd>是 — 美國號碼最穩，英國 / VoIP 不行</dd>
+    </dl></div>
+    <ol>
+      <li>到 <a href="https://platform.claude.com">platform.claude.com</a> 註冊。</li>
+      <li>信箱驗證。</li>
+      <li>簡訊驗證手機。</li>
+      <li>如果 <strong>Plans &amp; Billing</strong> 出現「Claim free credit」按鈕，點下去——14 天倒數從這一刻開始。</li>
+      <li><strong>Settings → API Keys → Create Key</strong>，命名後複製。</li>
+      <li>免費額度用完後到 <strong>Plans &amp; Billing</strong> 綁卡。</li>
+    </ol>
+    <div class="pitfall"><strong>易錯點。</strong> 手機號地區限制比 OpenAI 嚴格。免費額度的 14 天從你點 Claim 開始算，不是註冊——拖著不測會過期。中國大陸、俄羅斯及多個制裁國家不開放。</div>
+
+    <h2 id="zh-Hant-qwen-intl">阿里千問 — 國際版（Bailian / Model Studio）</h2>
+    <div class="facts"><dl>
+      <dt>控制台</dt>      <dd><a href="https://bailian.console.alibabacloud.com">bailian.console.alibabacloud.com</a></dd>
+      <dt>帳號註冊</dt>    <dd><a href="https://account.alibabacloud.com/register/intl_register.htm">account.alibabacloud.com（國際站）</a></dd>
+      <dt>Key 前綴</dt>    <dd><code>sk-…</code> 或工作區 <code>sk-sp-…</code></dd>
+      <dt>最便宜模型</dt>  <dd>Qwen-Turbo — 新加坡區域每百萬 tokens 約 $0.05 / $0.20</dd>
+      <dt>免費額度</dt>    <dd>新加坡區域新使用者每個模型約 100 萬 tokens 免費額度（限時）</dd>
+      <dt>推薦對象</dt>    <dd>中國大陸以外使用者，想免費起步</dd>
+    </dl></div>
+    <ol>
+      <li>到 <strong>alibabacloud.com</strong>（國際站，<em>不是</em> aliyun.com）註冊。</li>
+      <li>完成實名認證（個人用護照即可）。</li>
+      <li>打開 Model Studio 控制台，同意服務條款 — Bailian 自動開通。</li>
+      <li>選 <strong>Singapore</strong> 區域 — 只有這個區域有新使用者免費額度。</li>
+      <li>到 <strong>API-KEY</strong> 頁面點 <strong>Create API Key</strong>。</li>
+      <li>（可選）開「Free quota only」做硬性帳單保護。</li>
+    </ol>
+    <p>新加坡 base URL：<code>https://dashscope-intl.aliyuncs.com/compatible-mode/v1</code></p>
+    <div class="pitfall"><strong>易錯點。</strong> 最常見錯誤是註冊到 <code>aliyun.com</code>（中國站）而不是 <code>alibabacloud.com</code>（國際站）——中國站要中國身分證、海外卡也不能付。免費額度用完會自動開始扣費，除非開了「Free quota only」。新加坡 / 美東 / 法蘭克福 / 香港四個區域 key 和 base URL 都不通用，選錯會 401。</div>
+
+    <h2 id="zh-Hant-qwen-cn">阿里千問 — 中國本土版</h2>
+    <div class="facts"><dl>
+      <dt>控制台</dt>      <dd><a href="https://bailian.console.aliyun.com">bailian.console.aliyun.com</a></dd>
+      <dt>帳號註冊</dt>    <dd><a href="https://account.aliyun.com">account.aliyun.com</a></dd>
+      <dt>Key 前綴</dt>    <dd><code>sk-…</code></dd>
+      <dt>最便宜模型</dt>  <dd>Qwen-Turbo — 每百萬 tokens 約 ¥0.3 / ¥0.6</dd>
+      <dt>免費額度</dt>    <dd>每個模型 100 萬 tokens，180 天有效</dd>
+      <dt>必須</dt>        <dd>中國身分證 + +86 手機號（實名認證）</dd>
+    </dl></div>
+    <ol>
+      <li>用 +86 手機號在 aliyun.com 註冊。</li>
+      <li>完成<strong>實名認證</strong>（個人或企業）。</li>
+      <li>存取 bailian.console.aliyun.com 同意服務條款。</li>
+      <li>如果提示「尚未實名」，回帳號中心先完成身分證認證。</li>
+      <li>左側導覽打開 <strong>API-KEY</strong> → <strong>創建我的 API-KEY</strong>。</li>
+      <li>複製 <code>sk-…</code> 開頭的 key。</li>
+    </ol>
+    <p>本土版 base URL：<code>https://dashscope.aliyuncs.com/compatible-mode/v1</code></p>
+    <div class="pitfall"><strong>易錯點。</strong> aliyun.com 不接受外國護照——海外使用者走國際版 Bailian。本土版的 key 不能用於 <code>dashscope-intl</code> 端點（反之亦然）。免費額度 180 天悄悄過期。</div>
+
+    <h2 id="zh-Hant-deepseek">DeepSeek</h2>
+    <div class="facts"><dl>
+      <dt>控制台</dt>      <dd><a href="https://platform.deepseek.com/api_keys">platform.deepseek.com/api_keys</a></dd>
+      <dt>Key 前綴</dt>    <dd><code>sk-…</code></dd>
+      <dt>最便宜模型</dt>  <dd>deepseek-v4-flash — 每百萬 tokens $0.14 / $0.28</dd>
+      <dt>免費額度</dt>    <dd>看活動 — 以控制台橫幅為準</dd>
+      <dt>最低儲值</dt>    <dd>約 ¥10 / $2</dd>
+      <dt>推薦對象</dt>    <dd>付費方案裡最便宜，OpenAI SDK 相容</dd>
+    </dl></div>
+    <ol>
+      <li>存取 <a href="https://platform.deepseek.com">platform.deepseek.com</a> 註冊（信箱或微信 / Google / 手機號 SSO 都行）。</li>
+      <li>信箱驗證。</li>
+      <li>打開 <strong>API Keys → Create API Key</strong>，命名後複製。</li>
+      <li>到 <strong>Top up</strong> 儲值。海外用 USD/Stripe，國內用支付寶/微信。</li>
+      <li>SDK 的 base URL 設成 <code>https://api.deepseek.com</code>（OpenAI SDK 相容）。</li>
+    </ol>
+    <div class="pitfall"><strong>易錯點。</strong> 舊代碼裡的 <code>deepseek-chat</code> / <code>deepseek-reasoner</code> 在 2026 年 7 月後失效——新設定直接用 <code>deepseek-v4-flash</code>。控制台預設中文，英文切換在右上角。</div>
+
+    <h2 id="zh-Hant-doubao">豆包（火山方舟 / BytePlus ModelArk）</h2>
+    <p>位元組跳動用兩套獨立系統提供同樣的豆包模型，按你所在地選：</p>
+
+    <h3>火山方舟 Volcengine Ark — 中國本土</h3>
+    <div class="facts"><dl>
+      <dt>控制台</dt>      <dd><a href="https://console.volcengine.com/ark">console.volcengine.com/ark</a></dd>
+      <dt>Key 格式</dt>    <dd>UUID 格式（沒有 <code>sk-</code> 前綴）</dd>
+      <dt>最便宜模型</dt>  <dd>Doubao-1.5-lite-32k — 每百萬 tokens 約 ¥0.3 / ¥0.6</dd>
+      <dt>免費額度</dt>    <dd>每個開通的模型 50 萬 tokens，外加滾動「成長獎勵」活動</dd>
+      <dt>必須</dt>        <dd>+86 手機號 + 中國實名認證</dd>
+    </dl></div>
+    <ol>
+      <li>用 +86 手機號在 volcengine.com 註冊。</li>
+      <li>完成實名認證。</li>
+      <li>頂欄 <strong>大模型 → 火山方舟</strong>，捲到 <strong>API 接入</strong>。</li>
+      <li><strong>API Key 管理 → 創建 API Key</strong>，複製。</li>
+      <li>到 <strong>模型推理</strong>，找到要用的 Doubao 模型（如 Doubao-1.5-pro-32k），點 <strong>開通服務</strong>。模型不開通就不能用。</li>
+      <li>代碼裡要用<strong>接入點 ID</strong>（<code>ep-…</code>）——模型名不是 ID。</li>
+    </ol>
+
+    <h3>BytePlus ModelArk — 國際版</h3>
+    <div class="facts"><dl>
+      <dt>控制台</dt>      <dd><a href="https://console.byteplus.com">console.byteplus.com</a></dd>
+      <dt>必須</dt>        <dd>信箱 + 本人驗證（護照可），USD 卡支付</dd>
+      <dt>區域</dt>        <dd><code>ap-southeast-1</code>（新加坡）</dd>
+    </dl></div>
+    <ol>
+      <li>到 byteplus.com 註冊（跟 volcengine.com 不互通）。</li>
+      <li>完成本人驗證。</li>
+      <li>選 <strong>ap-southeast-1</strong>，多數 Doubao/Seed 模型在這裡。</li>
+      <li>ModelArk → <strong>API Key Management → Create API Key</strong>，複製。</li>
+      <li>到模型清單啟用要用的模型。</li>
+    </ol>
+    <div class="pitfall"><strong>易錯點。</strong> BytePlus 和火山方舟是完全獨立帳號——key、計費、可用模型都不互通。火山方舟「建 key + 單獨啟用每個模型 + 用接入點 ID」流程特別容易踩坑——把模型名當 ID 貼進去會 404。</div>
+  </section>
+
+</main>
+</body>
+</html>
