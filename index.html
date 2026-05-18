@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ReceiptMaster — Legal</title>
+<title>ReceiptMaster — Support</title>
 <style>
   :root {
     color-scheme: light dark;
@@ -13,6 +13,7 @@
     --link: #2557d6;
     --card: #f6f6f7;
     --border: #e5e5e5;
+    --rule: #ececec;
   }
   @media (prefers-color-scheme: dark) {
     :root {
@@ -22,55 +23,173 @@
       --link: #6ea1ff;
       --card: #1c1d1f;
       --border: #2a2c2f;
+      --rule: #1f2123;
     }
   }
   * { box-sizing: border-box; }
   html, body { margin: 0; padding: 0; }
   body {
-    font: 16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", "Hiragino Sans", "Noto Sans CJK JP", sans-serif;
+    font: 16px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", "Hiragino Sans", "Noto Sans CJK JP", sans-serif;
     color: var(--fg);
     background: var(--bg);
-    padding: 48px 20px 80px;
+    padding: 36px 20px 80px;
   }
   main { max-width: 720px; margin: 0 auto; }
-  h1 { font-size: 28px; margin: 0 0 8px; }
-  p { color: var(--muted); margin: 0 0 20px; }
+  h1 { font-size: 28px; margin: 0 0 6px; line-height: 1.25; }
+  h2 { font-size: 20px; margin: 32px 0 10px; line-height: 1.3; }
+  h3 { font-size: 16px; margin: 18px 0 4px; font-weight: 600; }
+  p, li { color: var(--fg); }
+  p.muted, .muted { color: var(--muted); }
   a { color: var(--link); text-decoration: none; }
   a:hover { text-decoration: underline; }
-  .card {
+  .intro { color: var(--muted); margin: 0 0 8px; }
+  .contact-box {
     border: 1px solid var(--border);
     background: var(--card);
     border-radius: 12px;
     padding: 18px 20px;
-    margin: 12px 0;
+    margin: 18px 0 28px;
   }
-  .card h2 { font-size: 17px; margin: 0 0 4px; }
-  .card p { margin: 0; font-size: 14px; }
+  .contact-box h2 { margin-top: 0; }
+  .contact-box .email {
+    font-size: 17px;
+    font-weight: 600;
+    margin: 4px 0 6px;
+  }
+  .faq-q {
+    font-weight: 600;
+    margin: 18px 0 4px;
+    color: var(--fg);
+  }
+  .faq-a {
+    margin: 0 0 0 0;
+    color: var(--fg);
+  }
+  ul { padding-left: 22px; margin: 6px 0 12px; }
+  hr {
+    border: none;
+    border-top: 1px solid var(--rule);
+    margin: 36px 0;
+  }
+  .legal-cards { display: grid; gap: 12px; }
+  .legal-cards a {
+    display: block;
+    border: 1px solid var(--border);
+    background: var(--card);
+    border-radius: 12px;
+    padding: 14px 18px;
+    color: inherit;
+  }
+  .legal-cards a:hover { text-decoration: none; border-color: var(--link); }
+  .legal-cards h3 { margin: 0 0 2px; font-size: 15px; }
+  .legal-cards p { margin: 0; font-size: 13px; color: var(--muted); }
   footer { color: var(--muted); font-size: 13px; margin-top: 48px; text-align: center; }
 </style>
 </head>
 <body>
 <main>
-  <h1>ReceiptMaster</h1>
-  <p>Legal pages for the ReceiptMaster iOS app (票账 / レシポ).</p>
+  <h1>ReceiptMaster — Support</h1>
+  <p class="intro">A receipt scanner + monthly budget planner for iPhone &amp; iPad. This page is for help, questions, and bug reports.</p>
 
-  <a class="card" href="privacy.html" style="display:block;color:inherit;">
-    <h2>Privacy Policy → </h2>
-    <p>How we handle your data. Short version: everything stays on your device.</p>
-  </a>
+  <div class="contact-box">
+    <h2>Contact</h2>
+    <p>The fastest way to reach us is by email. We typically respond within 1–2 business days.</p>
+    <p class="email">📧 <a href="mailto:receiptmaster@creditup.cn">receiptmaster@creditup.cn</a></p>
+    <p class="muted">Please include your iOS version, device model, and the app's version number (Settings → Version) when reporting an issue. Screenshots help.</p>
+  </div>
 
-  <a class="card" href="ai-setup.html" style="display:block;color:inherit;">
-    <h2>AI Setup Guide → </h2>
-    <p>Step-by-step instructions for getting an API key from each supported cloud AI provider — OpenAI, Claude, Qwen, DeepSeek, Doubao.</p>
-  </a>
+  <h2>Getting started</h2>
+  <ol>
+    <li><strong>Scan your first receipt.</strong> Tap the camera button in the bottom bar. Point at a paper receipt — the app crops, OCRs the text, and extracts amount, merchant, date, and line items on-device using Apple's Vision framework.</li>
+    <li><strong>Set up budget rules.</strong> In the Plan tab, add monthly income and fixed-expense rules. The app uses these to project your cash flow.</li>
+    <li><strong>(Optional) Enable Cloud AI for smarter scanning.</strong> Settings → AI Models. You'll need your own API key from one of the supported providers. Setup steps for each are <a href="ai-setup.html">here</a>. Apple Intelligence (on iOS 26+) works without an API key.</li>
+    <li><strong>Try Demo Mode</strong> if you want to explore every feature on sample data without committing real records. Settings → Demo Mode. One tap to switch back.</li>
+  </ol>
 
-  <a class="card" href="https://www.apple.com/legal/internet-services/itunes/dev/stdeula/" style="display:block;color:inherit;">
-    <h2>Terms of Use (EULA) → </h2>
-    <p>The app uses Apple's standard end-user license agreement.</p>
-  </a>
+  <h2>Frequently asked questions</h2>
+
+  <p class="faq-q">Does ReceiptMaster work without an internet connection?</p>
+  <p class="faq-a">Yes — fully. Scanning, OCR, budget tracking, statistics, and notifications all work offline. Network is only used (a) when you opt-in to Cloud AI and trigger one of the three AI features, (b) optionally for iCloud Sync between your own devices, or (c) for the App Store / StoreKit when you purchase the Pro upgrade.</p>
+
+  <p class="faq-q">Where is my data stored?</p>
+  <p class="faq-a">On your device, in iOS's secure SwiftData storage. If you enable iCloud Sync (Settings → iCloud Sync), it also syncs through your own private CloudKit database — counted against your iCloud quota, not ours. We operate no servers and have no access to your data.</p>
+
+  <p class="faq-q">My receipt scan picked the wrong amount / merchant — how do I fix it?</p>
+  <p class="faq-a">Tap any scanned field on the review screen before saving to edit it. The app remembers your corrections on-device to improve future scans of similar receipts.</p>
+
+  <p class="faq-q">Apple Intelligence vs. Cloud AI vs. no AI — which should I use?</p>
+  <p class="faq-a">Apple Intelligence (if your device supports it on iOS 26+) is best — local, free, no API key. If unavailable, Cloud AI with your own API key gives the best accuracy but requires a paid account with the provider. Without either, the app falls back to local regex parsing, which works well for clear paper receipts in supported languages.</p>
+
+  <p class="faq-q">What gets sent to the cloud when I enable Cloud AI?</p>
+  <p class="faq-a">It depends on which feature you trigger. Full disclosure: see the <a href="privacy.html">Privacy Policy</a> — every payload is listed line by line. In short: receipt OCR text + your own budget rule names (never the photo), or aggregated budget / cash-flow numbers. We never send your name, email, location, device ID, individual transactions, or merchant names.</p>
+
+  <p class="faq-q">How do I get an API key for OpenAI / Claude / Qwen / Doubao / DeepSeek?</p>
+  <p class="faq-a">See the <a href="ai-setup.html">AI Setup Guide</a> — step-by-step for each provider, including where to sign up and how to paste the key into the app.</p>
+
+  <p class="faq-q">Can I export my data?</p>
+  <p class="faq-a">Yes — Settings → Export to CSV. The exported file contains all your transactions and can be opened in Numbers, Excel, or any spreadsheet app.</p>
+
+  <p class="faq-q">How does the Pro subscription work?</p>
+  <p class="faq-a">One-time purchase via the App Store. It unlocks unlimited budget rules, multi-currency, advanced statistics, and the AI Advisor / AI Budget Review features. Family sharing is supported. The free tier remains fully usable for receipt scanning + basic planning.</p>
+
+  <p class="faq-q">The app crashed or behaves strangely — what should I do?</p>
+  <p class="faq-a">Force-quit (swipe up + flick the app away) and reopen. If it persists, please email us with: your iOS version, device model, app version (Settings → Version), and a brief description of what you were doing. We respond within 1–2 business days.</p>
+
+  <p class="faq-q">How do I delete all my data?</p>
+  <p class="faq-a">Delete the app from your iPhone (long-press the icon → Remove App → Delete App). All locally-stored data is removed with the app. If you enabled iCloud Sync, also go to iOS Settings → [Apple ID] → iCloud → Manage Storage → ReceiptMaster → Delete Data.</p>
+
+  <h2>Troubleshooting</h2>
+
+  <h3>Scans are inaccurate</h3>
+  <ul>
+    <li>Ensure good lighting and a flat receipt with no glare.</li>
+    <li>Crop tightly — extra background reduces OCR accuracy.</li>
+    <li>For non-Latin scripts (CJK), make sure your iOS device language settings include the script.</li>
+    <li>Try enabling Apple Intelligence or Cloud AI for harder receipts (e.g., faded thermal paper).</li>
+  </ul>
+
+  <h3>iCloud Sync isn't syncing</h3>
+  <ul>
+    <li>Check that you're signed into the same Apple ID on both devices.</li>
+    <li>iOS Settings → [Apple ID] → iCloud → Apps Using iCloud → ReceiptMaster must be ON.</li>
+    <li>Ensure you have available iCloud storage.</li>
+    <li>Sync can take 1–2 minutes on first set-up.</li>
+  </ul>
+
+  <h3>Cloud AI returns an error</h3>
+  <ul>
+    <li>Check that your API key is correct (Settings → AI Models → tap the provider).</li>
+    <li>Verify your provider account has billing set up and quota remaining.</li>
+    <li>Make sure your device has an internet connection.</li>
+    <li>If issues persist, try a different provider — the app supports five.</li>
+  </ul>
+
+  <h3>Notifications aren't appearing</h3>
+  <ul>
+    <li>iOS Settings → Notifications → ReceiptMaster → make sure "Allow Notifications" is ON.</li>
+    <li>Return-deadline reminders only fire for receipts with a deadline date set.</li>
+  </ul>
+
+  <hr>
+
+  <h2>Legal &amp; reference</h2>
+  <div class="legal-cards">
+    <a href="privacy.html">
+      <h3>Privacy Policy →</h3>
+      <p>How we handle your data, line by line for each AI feature. Short version: everything stays on your device.</p>
+    </a>
+    <a href="ai-setup.html">
+      <h3>AI Setup Guide →</h3>
+      <p>Step-by-step API-key instructions for OpenAI, Claude, Qwen, Doubao, and DeepSeek.</p>
+    </a>
+    <a href="https://www.apple.com/legal/internet-services/itunes/dev/stdeula/">
+      <h3>Terms of Use (EULA) →</h3>
+      <p>The app uses Apple's standard end-user license agreement.</p>
+    </a>
+  </div>
 
   <footer>
-    © 2026 ReceiptMaster
+    © 2026 ReceiptMaster · Contact: <a href="mailto:receiptmaster@creditup.cn">receiptmaster@creditup.cn</a>
   </footer>
 </main>
 </body>
